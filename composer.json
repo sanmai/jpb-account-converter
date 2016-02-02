@@ -1,0 +1,31 @@
+{
+    "name": "sanmai/jpb-account-converter",
+    "description": "Japan Post Bank account numbers converter for use in regular banks",
+    "homepage": "https://github.com/sanmai/jpb-account-converter",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Alexey Kopytko",
+            "email": "alexey@kopytko.ru",
+            "homepage": "http://www.alexeykopytko.com/"
+        }
+    ],
+    "require": {
+        "php": ">=5.6.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "*"
+    },
+    "autoload": {
+        "psr-4": {"KigoBangoShiraberu\\": "src/KigoBangoShiraberu"}
+    },
+    "autoload-dev": {
+        "psr-4": {"KigoBangoShiraberu\\": "tests/KigoBangoShiraberu"}
+    },
+    "scripts": {
+        "test": [
+            "phpunit"
+        ]
+    }
+}
