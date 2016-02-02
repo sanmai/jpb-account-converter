@@ -33,4 +33,6 @@ Only difference from the original tool is that this library doesn't check a bran
 
 ### Installation
 
-<!-- TODO composer require -->
+As simple as this:
+
+    composer require sanmai/jpb-account-converter
