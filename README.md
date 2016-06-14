@@ -1,6 +1,7 @@
 # Japan Post Bank Account Number Converter
 
 [![Build Status](https://travis-ci.org/sanmai/jpb-account-converter.svg?branch=master)](https://travis-ci.org/sanmai/jpb-account-converter)
+[![Coverage Status](https://coveralls.io/repos/github/sanmai/jpb-account-converter/badge.svg?branch=master)](https://coveralls.io/github/sanmai/jpb-account-converter?branch=master)
 
 This library enables you to convert specific to Japan Post Bank account code into familiar branch name and account number pair.
 
