@@ -1,7 +1,26 @@
 <?php
-/***
+/**
+ * This code is licensed under the MIT License.
+ *
  * Copyright (c) 2016 Alexey Kopytko
- * Released under the MIT license.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
  */
 
 namespace KigoBangoShiraberu;
@@ -12,46 +31,50 @@ class Converter
     const GIRO_ACCOUNT_SUFFIX = '9';
 
     /**
-     * Code number (always 5 digits) with an actual check digit on fourth position
+     * Code number (always 5 digits) with an actual check digit on fourth position.
+     *
      * @var string
      */
     private $kigou;
 
     /**
-     * Check digit for giro accounts (always 1 digit) - basically ignored except for validation
+     * Check digit for giro accounts (always 1 digit) - basically ignored except for validation.
+     *
      * @var string
      */
     private $naka;
 
     /**
-     * Account number (up to 8 digits for integrated accounts, and up to 6 digits for giro accounts)
+     * Account number (up to 8 digits for integrated accounts, and up to 6 digits for giro accounts).
+     *
      * @var string
      */
     private $bangou;
 
     /**
-     * Current account is integrated account
+     * Current account is integrated account.
+     *
      * @var bool
      */
     private $isNormalAccount = false;
 
     /**
-     * Branch number
+     * Branch number.
+     *
      * @var string
      */
     private $branchNumber;
 
     /**
-     *
      * Integrated account number format: Code number (5 digits, kigou) + account number (up to 8 digits, bangou)
-     * E.g.: 10540-12045071
+     * E.g.: 10540-12045071.
      *
      * Giro account number format: Code number (5 digits) + check digit (naka) + account number （up to 6 digits）
      * E.g.: 00160-0-100001
      *
-     * @param string $kigou Code number
-     * @param strin $bangou Account number
-     * @param strin $naka Giro account check digit
+     * @param string $kigou  Code number
+     * @param string $bangou Account number
+     * @param string $naka   Giro account check digit
      */
     public function __construct($kigou, $bangou, $naka = '')
     {
@@ -65,7 +88,7 @@ class Converter
         }
 
         // first digit is 1 for normal accounts
-        $this->isNormalAccount = $this->kigou[0] == '1';
+        $this->isNormalAccount = $this->kigou[0] === '1';
 
         $this->branchNumber = substr($this->kigou, 1, 2);
         // prefix depends on account type
@@ -100,15 +123,16 @@ class Converter
     {
         if ($this->isNormalAccount) {
             return '普通'; // both 普通 and 貯蓄 are valid for transfers
-        } else {
-            return '当座';
         }
+
+        return '当座';
     }
 
     private $vocKanji = ['〇', '一', '二', '三', '四', '五', '六', '七', '八', '九'];
 
     /**
-     * Get branch name in kanji
+     * Get branch name in kanji.
+     *
      * @return string
      */
     public function getBranchName()
@@ -121,7 +145,8 @@ class Converter
     private $vocKana = ['ゼロ', 'イチ', 'ニ', 'サン', 'ヨン', 'ゴ', 'ロク', 'ナナ', 'ハチ', 'キユウ'];
 
     /**
-     * Get branch name in kana
+     * Get branch name in kana.
+     *
      * @return string
      */
     public function getBranchNameKana()
@@ -134,7 +159,8 @@ class Converter
     const ACCOUNT_NUMBER_LENGTH = 7;
 
     /**
-     * Get padded account number
+     * Get padded account number.
+     *
      * @return string
      */
     public function getAccountNumber()
@@ -179,9 +205,11 @@ class Converter
     }
 
     /**
-     * Calculate a check digit
+     * Calculate a check digit.
+     *
      * @param string $kigou
      * @param string $bangou
+     *
      * @return number
      */
     public static function calculateCheckDigit($kigou, $bangou)
@@ -192,20 +220,22 @@ class Converter
         $array = array_merge($array, str_split(str_pad($bangou, 8, '0', STR_PAD_LEFT)));
 
         $sum = 0; // every three items...
-        for ($index = 0; $index < count($array)-2; $index += 3) {
+        for ($index = 0; $index < count($array) - 2; $index += 3) {
             $sum += $array[$index]; // add item
-            $sum += $array[$index+1] * 3; // add item * 3
-            $val = $array[$index+2]; // and then this:
+            $sum += $array[$index + 1] * 3; // add item * 3
+            $val = $array[$index + 2]; // and then this:
             $sum += ($val < 5) ? $val * 2 : $val * 2 - 9;
         }
-        $sum += $array[count($array)-1];
+        $sum += $array[count($array) - 1];
 
         return $sum % 10;
     }
 
     /**
-     * Converts "zen-kaku" alphabets and numbers to "han-kaku"
+     * Converts "zen-kaku" alphabets and numbers to "han-kaku".
+     *
      * @param string $number
+     *
      * @return string
      */
     public static function fullToHalfWidth($number)
