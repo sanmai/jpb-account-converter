@@ -16,5 +16,8 @@ cache:
 install:
   - composer install --prefer-dist
 
+script: 
+  - php vendor/bin/phpunit
+
 after_success:
   - travis_retry php vendor/bin/coveralls
