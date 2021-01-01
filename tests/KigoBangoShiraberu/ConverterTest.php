@@ -28,7 +28,7 @@ namespace KigoBangoShiraberu;
 /**
  * @covers \KigoBangoShiraberu\Converter
  */
-class ConverterTest extends \PHPUnit_Framework_TestCase
+class ConverterTest extends \LegacyPHPUnit\TestCase
 {
     public function testConvertToHalfWidth()
     {
@@ -73,48 +73,43 @@ class ConverterTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(7, converter::calculateCheckDigit(10001, 10001));
     }
 
-    /**
-     * @expectedException \KigoBangoShiraberu\Exception
-     * @expectedExceptionCode 1
-     */
     public function testInvalidChecksum()
     {
+        $this->expectException(\KigoBangoShiraberu\Exception::class);
+        $this->expectExceptionCode(1);
+
         new Converter('10000', '80000001', '0');
     }
 
-    /**
-     * @expectedException \KigoBangoShiraberu\Exception
-     * @expectedExceptionCode 2
-     */
     public function testInvalidCode()
     {
+        $this->expectException(\KigoBangoShiraberu\Exception::class);
+        $this->expectExceptionCode(2);
+
         new Converter('200001', '80000001');
     }
 
-    /**
-     * @expectedException \KigoBangoShiraberu\Exception
-     * @expectedExceptionCode 3
-     */
     public function testInvalidNumber()
     {
+        $this->expectException(\KigoBangoShiraberu\Exception::class);
+        $this->expectExceptionCode(3);
+
         new Converter('15150', '211111111');
     }
 
-    /**
-     * @expectedException \KigoBangoShiraberu\Exception
-     * @expectedExceptionCode 3
-     */
     public function testInvalidGiroNumber()
     {
+        $this->expectException(\KigoBangoShiraberu\Exception::class);
+        $this->expectExceptionCode(3);
+
         new Converter('01110', '2111110');
     }
 
-    /**
-     * @expectedException \KigoBangoShiraberu\Exception
-     * @expectedExceptionCode 4
-     */
     public function testInvalidGiroCheckDigit()
     {
+        $this->expectException(\KigoBangoShiraberu\Exception::class);
+        $this->expectExceptionCode(4);
+
         new Converter('01110', '211111', '11');
     }
 }
