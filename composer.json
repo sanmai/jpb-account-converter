@@ -1,13 +1,13 @@
 {
     "name": "sanmai/jpb-account-converter",
-    "description": "Japan Post Bank account numbers converter for use in regular banks",
+    "description": "Japan Post Bank account numbers converter for use in regular bank transfers.",
     "homepage": "https://github.com/sanmai/jpb-account-converter",
     "type": "library",
     "license": "MIT",
     "authors": [
         {
             "name": "Alexey Kopytko",
-            "email": "alexey@kopytko.ru",
+            "email": "alexey@kopytko.com",
             "homepage": "http://www.alexeykopytko.com/"
         }
     ],
